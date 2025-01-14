@@ -13,7 +13,7 @@ export const scopes = [
     'user-top-read',
     'user-modify-playback-state'
   ];
-export const clientId = 'd46089ad502a43888eb1a764ae0b8040';
+export const clientId = '2b6b582e7a3342288fa92e42c64f9c38';
 export const authEndPoint = 'https://accounts.spotify.com/authorize';
 export const frontendUrl = 'http://localhost:3001';
 export const LOAD_AT_ONCE_LIMIT = 99;
