@@ -22,6 +22,7 @@
     "@suid/vite-plugin": "^0.3.1",
     "solid-icons": "^1.1.0",
     "solid-js": "^1.9.4",
+    "solid-styled-components": "^0.28.5",
     "spotify-web-api-js": "^1.5.2"
   }
 }
