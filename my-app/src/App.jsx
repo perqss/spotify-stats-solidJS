@@ -1,7 +1,7 @@
-import { createSignal, createContext } from "solid-js";
+import { createSignal, createContext, useContext } from "solid-js";
 import { Router, Route } from "@solidjs/router";
 import Login from "./pages/Login";
-// import TopArtists from "./pages/TopArtists";
+import TopArtists from "./pages/TopArtists";
 // import TopSongs from "./pages/TopSongs";
 // import RecentlyPlayed from "./pages/RecentlyPlayed";
 // import BottomBar from "./components/BottomBar";
@@ -12,7 +12,7 @@ import Menu from "./components/Menu";
 // import TopAlbums from "./pages/TopAlbums";
 // import AlbumInfo from "./pages/AlbumInfo";
 
-export const AppContext = createContext();
+const AppContext = createContext();
 
 function App() {
   const [songId, setSongId] = createSignal();
@@ -23,13 +23,18 @@ function App() {
   const [songTerm, setSongTerm] = createSignal("long_term");
   const [albumTerm, setAlbumTerm] = createSignal("long_term");
 
-  const MenuWrapper = () => {
+  const TopArtistsWrapper = () => {
     return (
-      <Menu
-        componentIndex={0}
-        setArtistTerm={setArtistTerm}
-        term={artistTerm}
-      />
+      <div>
+        <Menu
+          componentIndex={0}
+          setArtistTerm={setArtistTerm}
+          term={artistTerm}
+        />
+        <TopArtists 
+          artistTerm={artistTerm}
+        />
+      </div>
     );
   }
 
@@ -46,11 +51,12 @@ function App() {
           <Route path="/" component={Login} />
           <Route 
             path='/top-artists' 
-            component={MenuWrapper}
+            component={TopArtistsWrapper}
         />
       </AppContext.Provider>
     </Router>
   );
 }
 
+export const useAppContext = () => useContext(AppContext);
 export default App;
