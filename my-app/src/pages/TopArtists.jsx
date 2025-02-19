@@ -31,7 +31,9 @@ const TopArtists = (props) => {
                         container
                         spacing={1}
                     >
-                        {artists() ? artists.map((artist, index) => 
+                        {artists()?.map((artist, index) => { 
+                            console.log(artist)
+                            return (
                             <Grid
                                 item
                                 key={index}
@@ -40,14 +42,10 @@ const TopArtists = (props) => {
                                 md={2}
                             >
                                 <ArtistCard
-                                    artistInfo={artist}
                                     index={index + 1}
+                                    artistInfo={artist}
                                 />
-                            </Grid>)
-                                :
-                            <Spinner 
-                                type={SpinnerType.bars} 
-                                color={spotifyGreen}/>}
+                            </Grid>)})}
                     </Grid>
                 </div>
             </div>
