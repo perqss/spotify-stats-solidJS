@@ -56,10 +56,10 @@ const ArtistPlayButton = styled(IconButton)`
 
 const SpotifyPlayButton = styled(Button)`
   &:hover {
-    background-color: #26eb6b;
+    background-color: #26eb6b !important;
   }
-  color: black;
-  background-color: ${spotifyGreen};
+  color: black !important;
+  background-color: ${spotifyGreen} !important;
 `;
 
 export {

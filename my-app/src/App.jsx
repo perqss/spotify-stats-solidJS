@@ -6,6 +6,7 @@ import TopArtists from "./pages/TopArtists";
 // import RecentlyPlayed from "./pages/RecentlyPlayed";
 // import BottomBar from "./components/BottomBar";
 import Menu from "./components/Menu";
+import ArtistProfile from "./pages/ArtistProfile";
 // import ArtistProfile from "./pages/ArtistProfile";
 // import SongInfo from "./pages/SongInfo";
 // import MusicTaste from "./pages/MusicTaste";
@@ -23,8 +24,7 @@ function App() {
   const [songTerm, setSongTerm] = createSignal("long_term");
   const [albumTerm, setAlbumTerm] = createSignal("long_term");
 
-  const TopArtistsWrapper = () => {
-    return (
+  const TopArtistsWrapper = () => 
       <div>
         <Menu
           componentIndex={0}
@@ -35,8 +35,15 @@ function App() {
           artistTerm={artistTerm}
         />
       </div>
-    );
-  }
+
+  const ArtistProfileWrapper = () => 
+      <div>
+        <Menu
+          setArtistTerm={setArtistTerm}
+          term={artistTerm}
+        />
+        <ArtistProfile/>
+      </div>
 
   return (
     <Router>
@@ -52,7 +59,11 @@ function App() {
           <Route 
             path='/top-artists' 
             component={TopArtistsWrapper}
-        />
+          />
+          <Route 
+            path='/artist/:artistId' 
+            component={ArtistProfileWrapper}
+          />
       </AppContext.Provider>
     </Router>
   );

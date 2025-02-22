@@ -12,7 +12,6 @@ const Tooltip = (props) => {
       const targetRect = targetRef.getBoundingClientRect();
       tooltipRef.style.top = `${targetRect.bottom + 8}px`;
       tooltipRef.style.left = `${targetRect.left + targetRect.width / 2}px`;
-      console.log(tooltipRef.style);
     }
   };
 
@@ -49,7 +48,7 @@ const Tooltip = (props) => {
           ref={tooltipRef}
           style={{
             position: 'fixed',
-            color: 'black',
+            color: 'white',
             transform: 'translateX(-50%)',
             opacity: 1,
           }}

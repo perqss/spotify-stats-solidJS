@@ -1,18 +1,19 @@
-import { createSignal, createEffect, onCleanup } from 'solid-js';
-import { AppBar, Box, IconButton, Typography, Avatar, Popper, Grow, MenuList, MenuItem, Paper, Button } from '@suid/material';
+import { createSignal, createEffect, onCleanup, onMount } from 'solid-js';
+import { AppBar, Box, IconButton, Typography, Avatar, Popper, Grow, MenuList, MenuItem, Paper, Button, Fade } from '@suid/material';
 import Tooltip from './Tooltip'
 import { darkerMainColor, githubUrl, mainColor } from '../common';
 import LogoutIcon from '@suid/icons-material/Logout';
 import { FaBrandsSpotify } from 'solid-icons/fa'
 import { spotifyGreen } from '../common';
-import { useNavigate, A } from '@solidjs/router';
+import { useNavigate } from '@solidjs/router';
 import { getProfile } from '../clients/SpotifyClient';
 
 const TopBar = () => {
   const navigate = useNavigate();
   const [profileData, setProfileData] = createSignal();
   const [openProfileMenu, setOpenProfileMenu] = createSignal(false);
-  let anchorRef;
+  const [anchorEl, setAnchorEl] = createSignal(null);
+  let anchorRef, popperRef;
 
   createEffect(() => {
     const getProfileWrapper = async () => {
@@ -29,13 +30,30 @@ const TopBar = () => {
     navigate('/');
   };
 
-  const handleAvatarClick = () => {
-    setOpenProfileMenu(!openProfileMenu());
+  const handleAvatarClick = (event) => {
+    if (!openProfileMenu()) {
+      setOpenProfileMenu(true);
+      setAnchorEl(event.currentTarget);
+    } else {
+      setOpenProfileMenu(false);
+      setAnchorEl(null);
+    }
   };
 
-  const handleProfileMenuClose = () => {
-    setOpenProfileMenu(false);
+  const handleClickAway = (event) => {
+    if (!popperRef.contains(event.target)) {
+      setOpenProfileMenu(false);
+      setAnchorEl(null);
+    }
   };
+
+  onMount(() => {
+    document.addEventListener('click', handleClickAway);
+  });
+
+  onCleanup(() => {
+    document.removeEventListener('click', handleClickAway);
+  });
 
   return (
     <AppBar
@@ -62,51 +80,47 @@ const TopBar = () => {
         <Button sx={{ color: 'white' }} href={githubUrl} target="_blank">
           Github
         </Button>
-        <IconButton onClick={handleAvatarClick} ref={el => (anchorRef = el)}>
+        <IconButton 
+          onClick={handleAvatarClick} 
+          ref={popperRef}
+        >
             <Tooltip text="Account">
                 <Avatar src={profileData()?.images[1]?.url} />
             </Tooltip>
-            
-          {/* <Tooltip.Root>
-            <Tooltip.Trigger>
-                <Avatar src={profileData()?.images[1]?.url} />
-            </Tooltip.Trigger>
-            <Tooltip.Positioner>
-                <Tooltip.Content>Account</Tooltip.Content>
-            </Tooltip.Positioner>
-          </Tooltip.Root> */}
-          {/* <Popper open={openProfileMenu()} anchorEl={anchorRef} placement="bottom-start" transition>
-            {({ TransitionProps, placement }) => (
-              <Grow
-                {...TransitionProps}
-                style={{
-                  transformOrigin: placement === 'bottom-start' ? 'left top' : 'left bottom',
-                }}
-              >
-                <Paper>
-                  <ClickAwayListener onClickAway={handleProfileMenuClose}>
-                    <MenuList
-                      autoFocusItem={openProfileMenu()}
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        flexDirection: 'column',
-                        backgroundColor: mainColor,
-                        color: 'white',
-                      }}
-                    >
-                      <Typography>{profileData()?.display_name}</Typography>
-                      <Typography>{`${profileData()?.followers.total} followers`}</Typography>
-                      <MenuItem component={A} href={profileData()?.external_urls?.spotify} target="_blank">
-                        Go to your Spotify page
-                      </MenuItem>
-                    </MenuList>
-                  </ClickAwayListener>
-                </Paper>
-              </Grow>
-            )}
-          </Popper> */}
+            <Popper
+              open={openProfileMenu()}
+              anchorEl={anchorEl()}
+              
+              placement='bottom-start'
+              transition
+            >  
+              <Fade>
+                <MenuList
+                  sx={{
+                    display: 'flex', 
+                    justifyContent: 'center', 
+                    alignItems: 'center', 
+                    flexDirection: 'column',
+                    backgroundColor: mainColor,
+                    color: 'white'
+                  }}
+                >
+                  <Typography>
+                    {profileData()?.display_name}
+                  </Typography>
+                  <Typography>
+                    {`${profileData()?.followers.total} followers`}
+                  </Typography>
+                  <MenuItem
+                    component='a'
+                    href={profileData()?.external_urls?.spotify}
+                    target='_blank'
+                  >
+                    Go to your Spotify page
+                  </MenuItem>
+                </MenuList>
+              </Fade>
+            </Popper>
         </IconButton>
         <Tooltip text="Log out">
           <IconButton onClick={handleLogout}>

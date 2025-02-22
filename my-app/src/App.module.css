@@ -1,3 +1,7 @@
+:root {
+  --lighterMainColor: #2f302f;
+}
+
 .App {
   text-align: center;
 }

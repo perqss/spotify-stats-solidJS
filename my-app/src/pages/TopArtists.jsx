@@ -32,7 +32,6 @@ const TopArtists = (props) => {
                         spacing={1}
                     >
                         {artists()?.map((artist, index) => { 
-                            console.log(artist)
                             return (
                             <Grid
                                 item
