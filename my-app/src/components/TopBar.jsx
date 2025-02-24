@@ -1,5 +1,5 @@
 import { createSignal, createEffect, onCleanup, onMount } from 'solid-js';
-import { AppBar, Box, IconButton, Typography, Avatar, Popper, Grow, MenuList, MenuItem, Paper, Button, Fade } from '@suid/material';
+import { AppBar, Box, IconButton, Typography, Avatar, Popper, MenuList, MenuItem, Button, Fade } from '@suid/material';
 import Tooltip from './Tooltip'
 import { darkerMainColor, githubUrl, mainColor } from '../common';
 import LogoutIcon from '@suid/icons-material/Logout';
@@ -13,7 +13,7 @@ const TopBar = () => {
   const [profileData, setProfileData] = createSignal();
   const [openProfileMenu, setOpenProfileMenu] = createSignal(false);
   const [anchorEl, setAnchorEl] = createSignal(null);
-  let anchorRef, popperRef;
+  let popperRef;
 
   createEffect(() => {
     const getProfileWrapper = async () => {

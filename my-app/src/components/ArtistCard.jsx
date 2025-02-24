@@ -10,8 +10,10 @@ const ArtistCard = (props) => {
   const setSongId = useAppContext()?.setSongId;
   const setAlbumId = useAppContext()?.setAlbumId;
   const setOpenBottomBar = useAppContext()?.setOpenBottomBar;
+  const artistId = useAppContext()?.artistId;
   //const { setArtistId, setSongId, setAlbumId, setOpenBottomBar } = useAppContext();
   const navigate = useNavigate();
+ // console.log(setArtistId, setSongId, setAlbumId, setOpenBottomBar);
 
   const handleClickPlayBtn = () => {
     setArtistId(props.artistInfo?.id);
@@ -43,12 +45,12 @@ const ArtistCard = (props) => {
         >
         </CardActions>
       </CardActionArea>
-      <ArtistPlayButton
-            onClick={handleClickPlayBtn}
-      >
-        <PlayCircleOutline 
-          sx={{color: 'white'}}
-        />
+        <ArtistPlayButton
+          onClick={handleClickPlayBtn}
+        >
+          <PlayCircleOutline 
+            sx={{color: 'white'}}
+          />
       </ArtistPlayButton>
     </Card>
   );
