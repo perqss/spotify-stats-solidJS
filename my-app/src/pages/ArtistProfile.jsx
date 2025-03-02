@@ -14,12 +14,12 @@ const ArtistProfile = () => {
     //const [artistInfo, setArtistInfo] = createSignal();
     const navigate = useNavigate();
 
-    const fetchArtist = async (artistId) => {
+    const fetchArtist = async () => {
         const response = await getArtist(artistId);
         return response;
     }
 
-    const [artistInfo] = createResource(artistId, fetchArtist);
+    const [artistInfo] = createResource(fetchArtist);
 
     return (
         <div style={{['overflow-x']: 'hidden'}}>

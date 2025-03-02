@@ -31,9 +31,11 @@ const Menu = (props) => {
   });
 
   createEffect(() => {
-    if (props.term() === 'long_term') setSelectedSubMenu(subMenuItems[0]);
-    else if (props.term() === 'medium_term') setSelectedSubMenu(subMenuItems[1]);
-    else if (props.term() === 'short_term') setSelectedSubMenu(subMenuItems[2]);
+    if (typeof props.term === 'function') {
+      if (props.term() === 'long_term') setSelectedSubMenu(subMenuItems[0]);
+      else if (props.term() === 'medium_term') setSelectedSubMenu(subMenuItems[1]);
+      else if (props.term() === 'short_term') setSelectedSubMenu(subMenuItems[2]);
+    }
   });
 
   const setPropsTerm = (subMenuItem, setTerm) => {

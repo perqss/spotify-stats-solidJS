@@ -3,16 +3,14 @@ import { Router, Route } from "@solidjs/router";
 import Login from "./pages/Login";
 import TopArtists from "./pages/TopArtists";
 import TopSongs from "./pages/TopSongs";
-// import RecentlyPlayed from "./pages/RecentlyPlayed";
-// import BottomBar from "./components/BottomBar";
 import Menu from "./components/Menu";
 import ArtistProfile from "./pages/ArtistProfile";
 import BottomBar from "./components/BottomBar";
-// import ArtistProfile from "./pages/ArtistProfile";
 import SongInfo from "./pages/SongInfo";
+import RecentlyPlayed from "./pages/RecentlyPlayed";
 // import MusicTaste from "./pages/MusicTaste";
-// import TopAlbums from "./pages/TopAlbums";
-// import AlbumInfo from "./pages/AlbumInfo";
+import TopAlbums from "./pages/TopAlbums";
+import AlbumInfo from "./pages/AlbumInfo";
 
 const AppContext = createContext();
 
@@ -66,6 +64,34 @@ function App() {
       />
       <SongInfo/>
     </div>
+  
+  const RecentlyPlayedWrapper = () => 
+    <div>
+      <Menu
+        componentIndex={3}
+      />
+      <RecentlyPlayed/>
+    </div>
+  
+  const TopAlbumsWrapper = () => 
+    <div>
+      <Menu
+        componentIndex={2}
+        setAlbumTerm={setAlbumTerm}
+        term={albumTerm}
+      />
+      <TopAlbums
+        albumTerm={albumTerm}
+      />
+    </div>
+  
+  const AlbumInfoWrapper = () => 
+    <div>
+      <Menu
+        setAlbumTerm={setAlbumTerm}
+      />
+      <AlbumInfo/>
+    </div>
 
   return (
     <AppContext.Provider
@@ -96,6 +122,18 @@ function App() {
         <Route 
           path='/song/:songId' 
           component={SongInfoWrapper}
+        />
+        <Route
+          path='/recently-played'
+          component={RecentlyPlayedWrapper}
+        />
+        <Route
+          path='/top-albums'
+          component={TopAlbumsWrapper}
+        />
+        <Route
+          path='/album/:albumId'
+          component={AlbumInfoWrapper}
         />
       </Router>
     <BottomBar 

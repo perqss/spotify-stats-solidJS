@@ -14,12 +14,12 @@ const navigate = useNavigate();
 const [audioFeatures, setAudioFeatures] = createSignal();
 const [audioAnalysis, setAduioAnalysis] = createSignal();
 
-const fetchSong = async (songId) => {
+const fetchSong = async () => {
     const response = await getTrack(songId);
     return response;
 };
 
-const [songInfo] = createResource(songId, fetchSong);
+const [songInfo] = createResource(fetchSong);
 
 return (
     <div style={{overflowX: 'hidden'}}>
