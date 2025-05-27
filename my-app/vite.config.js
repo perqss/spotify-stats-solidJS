@@ -1,10 +1,14 @@
 import { defineConfig } from 'vite';
 import solidPlugin from 'vite-plugin-solid';
-import suidPlugin from "@suid/vite-plugin";
 
 export default defineConfig({
-  plugins: [solidPlugin(), suidPlugin()],
+  plugins: [solidPlugin()],
+  preview: {
+    host: '127.0.0.1',
+    port: 3002,
+  },
   server: {
+    host: "127.0.0.1",
     port: 3001,
   },
   build: {

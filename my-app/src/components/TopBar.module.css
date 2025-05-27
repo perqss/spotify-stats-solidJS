@@ -1,0 +1,85 @@
+.top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    background-color: #0f0f0f;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px;
+    gap: 12px;
+    z-index: 999;
+  }
+
+  .left-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    white-space: nowrap;
+  }
+
+  .app-title {
+    color: white;
+    font-weight: bold;
+  }
+
+  .right-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-right: 3em;
+  }
+
+  .github-button {
+    background-color: inherit;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .github-button:hover {
+        color: #807e7e;
+    }
+
+  .profile-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background-color: #1e1f1e;
+    color: white;
+    border-radius: 6px;
+    padding: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    min-width: 200px;
+    z-index: 999;
+  }
+
+  .dropdown-menu p {
+    margin: 4px 0;
+  }
+
+  .dropdown-menu a {
+    color: white;
+  }
+
+  .github-button:hover {
+    opacity: 0.8;
+  }

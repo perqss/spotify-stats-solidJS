@@ -1,58 +1,57 @@
-import { CardActionArea, Card, CardActions, CardContent, CardMedia, Button, Typography } from '@suid/material';
-import { mainColor, darkerMainColor, lighterMainColor, spotifyGreen } from '../common';
-import { ArtistPlayButton } from './MaterialComponentsCss';
-import PlayCircleOutline from '@suid/icons-material/PlayCircleOutline';
+import { useContext } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
-import { useAppContext } from '../App';
+import { AppContext } from '../App';
+import { spotifyGreen } from '../common';
+import styles from './Artist.module.css';
 
-const ArtistCard = (props) => {
-  const setArtistId = useAppContext()?.setArtistId;
-  const setSongId = useAppContext()?.setSongId;
-  const setAlbumId = useAppContext()?.setAlbumId;
-  const setOpenBottomBar = useAppContext()?.setOpenBottomBar;
-  const artistId = useAppContext()?.artistId;
-  //const { setArtistId, setSongId, setAlbumId, setOpenBottomBar } = useAppContext();
+const ArtistCard = ({ className, artistInfo, handleClickFollowBtnParent }) => {
+  const context = useContext(AppContext);
   const navigate = useNavigate();
- // console.log(setArtistId, setSongId, setAlbumId, setOpenBottomBar);
 
-  const handleClickPlayBtn = () => {
-    setArtistId(props.artistInfo?.id);
-    setOpenBottomBar(true);
-    setSongId(null);
-    setAlbumId(null);
+  const handleClickPlayBtn = (e) => {
+    e.stopPropagation();
+    context.setArtistId(artistInfo.id);
+    context.setOpenBottomBar(true);
+    context.setSongId(null);
+    context.setAlbumId(null);
   };
 
-  const handleClickAritst = () => {
-    navigate(`/artist/${props.artistInfo.id}`);
+  const handleClickArtist = () => {
+    navigate(`/artist/${artistInfo.id}`);
+  };
+
+  const handleClickFollowBtn = async (event) => {
+    event.stopPropagation();
+    await handleClickFollowBtnParent(artistInfo);
   };
 
   return (
-    <Card sx={{backgroundColor: mainColor, margin: 1}}>
-      <CardActionArea
-        onClick={handleClickAritst}
-      >
-        <CardMedia
-          sx={{ height: '200px'}}
-          image={props.artistInfo.images[0].url}
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h7" color='white'>
-            {`${props.index}. ${props.artistInfo.name}`}
-          </Typography>
-        </CardContent>
-        <CardActions
-          disableSpacing
-        >
-        </CardActions>
-      </CardActionArea>
-        <ArtistPlayButton
-          onClick={handleClickPlayBtn}
-        >
-          <PlayCircleOutline 
-            sx={{color: 'white'}}
-          />
-      </ArtistPlayButton>
-    </Card>
+    <div class={className}>
+        <div class={styles["artist-card"]} onClick={handleClickArtist}>
+            <img class={styles["artist-image"]} src={artistInfo.images[0].url} alt={artistInfo.name} />
+            <div class={styles["artist-info"]}>
+                <p class={styles["artist-name"]}>{`${artistInfo.name}`}</p>
+            </div>
+            <div>
+              <button 
+                  style={{'background-color': 'inherit'}} 
+                  class="material-icons" 
+                  onClick={handleClickPlayBtn}
+                  title="Play"
+                >
+                    play_circle
+                </button>
+                <button 
+                  class="material-icons follow-button" 
+                  style={{'background-color': 'inherit', color: artistInfo.isFollowing ? spotifyGreen : 'white'}}
+                  onClick={handleClickFollowBtn}
+                  title="Follow"
+                >
+                  favorite
+                </button>
+            </div>
+        </div>
+    </div>
   );
 }
 

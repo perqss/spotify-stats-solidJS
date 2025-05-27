@@ -1,8 +1,6 @@
 import { createEffect, createResource, createSignal } from "solid-js";
 import { getTopSongs } from "../clients/SpotifyClient";
 import AlbumCard from '../components/AlbumCard';
-import { Grid } from "@suid/material";
-import styles from '../App.module.css'
 
 const TopAlbums = (props) => {
     const [albums, setAlbums] = createSignal();

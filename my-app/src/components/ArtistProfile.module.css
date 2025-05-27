@@ -1,0 +1,33 @@
+.artist-profile-display {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin-left: 200px;
+}
+
+.artist-image {
+    border-radius: 50%;
+    width: 25vw;
+    height: 55vh;
+    object-fit: cover;
+}
+
+.info-card {
+    color: white;
+    margin: 5px;
+    padding: 5px;
+}
+
+.info-text {
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.genres-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 30px;
+}

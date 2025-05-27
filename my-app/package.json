@@ -7,7 +7,7 @@
     "start": "vite",
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "preview": "vite preview"
   },
   "license": "MIT",
   "devDependencies": {
@@ -15,15 +15,8 @@
     "vite-plugin-solid": "^2.11.0"
   },
   "dependencies": {
-    "@ark-ui/solid": "^4.8.0",
     "@solidjs/router": "^0.15.2",
-    "@suid/icons-material": "^0.8.1",
-    "@suid/material": "^0.18.0",
-    "@suid/vite-plugin": "^0.3.1",
-    "solid-icons": "^1.1.0",
     "solid-js": "^1.9.4",
-    "solid-spinner": "^0.2.0",
-    "solid-styled-components": "^0.28.5",
     "spotify-web-api-js": "^1.5.2"
   }
 }

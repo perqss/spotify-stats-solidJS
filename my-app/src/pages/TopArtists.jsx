@@ -1,55 +1,72 @@
-import { createSignal, createEffect, createResource } from 'solid-js';
-import Menu from '../components/Menu';
-import { LOAD_AT_ONCE_LIMIT, OFFSET, lighterMainColor, spotifyGreen } from '../common';
-import { getTopArtists } from '../clients/SpotifyClient';
-//import ArtistCard from '../components/ArtistCard';
-import { Grid } from '@suid/material';
-import { Spinner, SpinnerType } from 'solid-spinner';
-//import BottomBar from '../components/BottomBar';
-import { SpotifyPlayButton } from '../components/MaterialComponentsCss';
-//import LoadMoreButton from '../components/LoadMoreButton';
-import styles from '../App.module.css'
+import { createSignal, createEffect } from 'solid-js';
+import { getTopArtists, isFollowingArtists, followArtists, unfollowArtists } from '../clients/SpotifyClient';
+import { createStore } from 'solid-js/store';
 import ArtistCard from '../components/ArtistCard';
+import { assignArtistId } from '../common';
 
-const TopArtists = (props) => {
 
-    const fetchTopArtists = async (term) => {
-        const response = await getTopArtists(term);
+const TopArtists = ({ artistTerm }) => {
+    const [artists, setArtists] = createStore([]);
+   // const [artists, setArtists] = createSignal([]);
+
+    const fetchTopArtists = async () => {
+        const response = await getTopArtists(artistTerm());
         return response.items;
-    }
+    };
+
+    createEffect(() => {
+        const fetchArtistsWrapper = async () => {
+            const topArtists = await fetchTopArtists();
+            const artistIds = topArtists.map(artist => artist.id);
+            const followed = await isFollowingArtists(artistIds);
+            const newArtists = topArtists.map((artist, index) => {
+                return {
+                    ...artist,
+                    isFollowing: followed[index],
+                };
+            })
+            setArtists(newArtists);
+        }
+
+        fetchArtistsWrapper();
+    })
+
+    const handleClickFollowBtnParent = async (artist) => {
+        if (!artist.isFollowing) {
+            await followArtists([artist.id]);
+        } else {
+            await unfollowArtists([artist.id]);
+        }
+        //const index = artists.findIndex(a => a.id === artist.id);
+        setArtists((a) => a.id === artist.id, 'isFollowing', !artist.isFollowing);
+        //setArtists(artists().map(a => a.id === artist.id ? { ...a, isFollowing: !artist.isFollowing } : a));
+    };
     
-    const [artists] = createResource(props.artistTerm, fetchTopArtists);
     return (
-        <div>
-            <div
-                class={styles.displayOuterContainer}
-            >
-                <div
-                    class={styles.displayInnerContainer}
-                >
-                    <Grid
-                        container
-                        spacing={1}
-                    >
-                        {artists()?.map((artist, index) => { 
+        <div class='display-outer-container'>
+            <div class='display-inner-container'>
+                <div class='grid-container'>
+                    <For each={artists}>
+                        {(artist, index) => {
                             return (
-                            <Grid
-                                item
-                                key={index}
-                                xs={12}
-                                sm={6}
-                                md={2}
-                            >
+                        <div 
+                            class='grid-item' 
+                        >
+                            <div class='card-wrapper'>
+                                <div class='card-index'>{index() + 1}</div>
                                 <ArtistCard
-                                    index={index + 1}
+                                    className={assignArtistId(artists, index())}
                                     artistInfo={artist}
+                                    handleClickFollowBtnParent={handleClickFollowBtnParent}
                                 />
-                            </Grid>)})}
-                    </Grid>
+                            </div>  
+                        </div>)
+                        }}
+                    </For>
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 export default TopArtists;

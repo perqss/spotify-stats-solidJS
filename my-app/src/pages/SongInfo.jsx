@@ -1,11 +1,8 @@
 import { createSignal, createResource } from "solid-js";
-import { Avatar, Typography, IconButton } from "@suid/material";
 import { lighterMainColor } from "../common";
 import { parseArtists } from "../common";
-import { SpotifyPlayButton } from "../components/MaterialComponentsCss";
 import { grey, getReleaseDateYear } from "../common";
 import { getTrackAudioFeatures, getTrack, getTrackAudioAnalysis } from "../clients/SpotifyClient";
-import { ArrowBackIosNewOutlined } from "@suid/icons-material";
 import { useNavigate, useParams } from "@solidjs/router";
 
 const SongInfo = () => {

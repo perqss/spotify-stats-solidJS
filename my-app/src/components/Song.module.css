@@ -1,0 +1,60 @@
+.play-button {
+    background-color: inherit;
+}
+.song-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border-bottom: 1px solid white;
+}
+
+.song-item:hover {
+    background-color: #2a2a2a;
+}
+
+.song-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.song-graphic {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 30px;
+}
+
+.song-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.primary-text {
+    color: white;
+    font-size: 1rem;
+}
+
+.secondary-text {
+    font-size: 0.85rem;
+}
+
+.meta-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.duration {
+    color: white;
+    font-size: 0.9rem;
+    text-align: right;
+}
+
+.separator {
+    height: 1px;
+    background-color: white;
+}

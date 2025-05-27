@@ -1,90 +1,80 @@
-import { useAppContext } from "../App";
-import { ListItemAvatar, ListItemText, Avatar, Divider } from "@suid/material";
-import { MenuItemButton, SongPlayButton } from "./MaterialComponentsCss";
-import { useNavigate } from "@solidjs/router";
-import { grey, parseArtists } from "../common";
-import { PlayCircleFilledOutlined } from "@suid/icons-material";
+import { useContext } from 'solid-js';
+import { AppContext } from '../App';
+import { useNavigate } from '@solidjs/router';
+import { grey, parseArtists, durationInHrMinSec } from '../common';
+import styles from './Song.module.css';
+import { saveTracks, removeSavedTracks } from '../clients/SpotifyClient';
 
-const Song = (props) => {
-const setSongId = useAppContext()?.setSongId;
-const setArtistId = useAppContext()?.setArtistId;
-const setAlbumId = useAppContext()?.setAlbumId;
-const setOpenBottomBar = useAppContext()?.setOpenBottomBar;
-const navigate = useNavigate();
+const Song = ({ className, songInfo, albumCover, handleClickSaveBtnParent }) => {
+    const context = useContext(AppContext);
+    const navigate = useNavigate();
 
-const durationInHrMinSec = (duration) => {
-    let milliseconds = Math.floor((duration % 1000) / 100),
-    seconds = Math.floor((duration / 1000) % 60),
-    minutes = Math.floor((duration / (1000 * 60)) % 60),
-    hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
-
-    hours = (hours < 10) ? '0' + hours : hours;
-    minutes = (minutes < 10) ? '0' + minutes : minutes;
-    seconds = (seconds < 10) ? '0' + seconds : seconds;
-
-    let result;
-    hours === '00' ? result = minutes + ':' + seconds : result = hours + ':' + minutes + ':' + seconds;
-    return result;
-};
-
-const handleClickPlayBtn = (event) => {
-    event.stopPropagation();
-    setSongId(props.songInfo.id);
-    setOpenBottomBar(true);
-    setArtistId(null);
-    setAlbumId(null);
-};
-
-const handleSecondary = () => {
-    if (props.albumInfo) {
-        return `${parseArtists(props.songInfo.artists)}`;
-    } else {
-        return `${parseArtists(props.songInfo.album.artists)} - ${props.songInfo.album.name}`;
-    }
-    }
-    
-return (
-    <div>
-        <MenuItemButton
-            onClick={() => navigate(`/song/${props.songInfo.id}`)}
-        >
-            <ListItemAvatar>
-                <Avatar
-                    src={props.albumInfo ? props.albumInfo.images[1].url : props.songInfo.album.images[2].url}
-                />
-            </ListItemAvatar>
-            <ListItemText
-                primary={`${props.index}. ${props.songInfo.name}`}
-                primaryTypographyProps={{sx: {color: 'white'}}}
-                secondary={handleSecondary()}
-                secondaryTypographyProps={{sx: {color: grey}}}
-            />
-            <SongPlayButton
-                onClick={handleClickPlayBtn}
-            >
-                <PlayCircleFilledOutlined
-                    sx={{color: 'white'}}
-                />
-            </SongPlayButton>
-            <div
-                style={{
-                    color: 'white'
-                    }}
-                >
-                {durationInHrMinSec(props.songInfo.duration_ms)}
-            </div>
-
-        </MenuItemButton>
-        {props.index < props.length ? 
-            <Divider 
-                variant='inset'
-                sx={{
-                    backgroundColor: 'white'
-                }}
-            /> : ''
+    const handleSecondary = () => {
+        if (albumCover) {
+            return `${parseArtists(songInfo.artists)}`;
+        } else {
+            return `${parseArtists(songInfo.album.artists)} - ${songInfo.album.name}`;
         }
+    }
+
+    const handleClickPlayBtn = (e) => {
+      e.stopPropagation();
+      context.setArtistId(null);
+      context.setOpenBottomBar(true);
+      context.setSongId(songInfo.id);
+      context.setAlbumId(null);
+    };
+
+    const handleClickSaveBtn = async (event) => {
+        event.stopPropagation();
+        await handleClickSaveBtnParent(songInfo);
+    };
+
+    const handleSongClick = () => {
+        navigate(`/song/${songInfo.id}`);
+    };
+  
+  return (
+    <div class={className}>
+        <div class={styles["song-item"]} onClick={handleSongClick}>
+            <div class={styles["song-left"]}>
+                <img
+                    class={styles["song-graphic"]}
+                    src={albumCover ? albumCover : songInfo.album.images[2].url}
+                    alt="Cover art"
+                />
+                <div class={styles["song-text"]}>
+                    <div class={styles["primary-text"]}>{songInfo.name}</div>
+                    <div 
+                        class={styles["secondary-text"]} 
+                        style={{
+                            color: {grey}
+                        }}
+                    >
+                        {handleSecondary()}
+                    </div>
+                </div>
+            </div>
+            <div class={styles["meta-controls"]}>
+                <button 
+                    class="material-icons"
+                    style={{'background-color': 'inherit', color: songInfo.isSaved ? 'yellow' : 'white'}}
+                    onClick={handleClickSaveBtn}
+                    title={songInfo.isSaved ? "Remove from Library" : "Add to Library"}
+                > 
+                    bookmark_add
+                </button>
+                <button 
+                    class={`material-icons ${styles["play-button"]}`}
+                    onClick={handleClickPlayBtn}
+                    title="Play"
+                >
+                    play_circle
+                </button>
+                <div class={styles["duration"]}>{durationInHrMinSec(songInfo.duration_ms)}</div>
+            </div>
+        </div>
     </div>
-    )
-};
+)};
 
 export default Song;

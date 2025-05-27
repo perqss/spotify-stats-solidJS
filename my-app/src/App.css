@@ -1,0 +1,179 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #2f302f;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --lighterMainColor: #2f302f;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #666666;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+.display-outer-container {
+  overflow-x: hidden; 
+  overflow-y: hidden; 
+  display: flex; 
+  flex-direction: row;
+  background-color: var(--lighterMainColor);
+}
+
+.display-inner-container {
+  height: 100%;
+  width: 100%;
+  background-color: var(--lighterMainColor);
+  margin-top: 60px;
+  margin-left: 200px;
+}
+
+.card-media-img {
+  background-image: var(--url);
+  height: 200px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.grid-item {
+  color: white;
+  padding: 16px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.card-wrapper {
+  position: relative;
+}
+
+.card-index {
+  position: absolute;
+  top: 12px;
+  left: 20px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.song-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.artist-album-card {
+  background-color: #121212;
+  margin: 8px;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+}
+
+.artist-album-card:hover {
+  background-color: #1e1e1e;
+}
+
+.artist-album-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.artist-album-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.artist-album-name {
+  color: white;
+  font-size: 1rem;
+  margin: 0;
+  flex: 1;
+}
+
+.back-button {
+  position: absolute;
+  top: 70px;
+  left: 250px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+}
+
+.cover-display {
+  width: 25vw;
+  height: 55vh;
+  object-fit: cover;
+  border-radius: 8px;
+  display: flex;
+}
+
+.song-album-info {
+  margin-left: 20px;
+  color: white;
+}

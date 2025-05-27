@@ -1,6 +1,4 @@
 import { createEffect, createSignal } from "solid-js";
-import { IconButton } from "@suid/material";
-import { CancelOutlined } from "@suid/icons-material";
 
 const BottomBar = (props) => {
     const chooseSrc = () => {

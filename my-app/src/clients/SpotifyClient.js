@@ -1,7 +1,107 @@
-import { spotify } from "..";
+import { spotify } from "../index";
 import { checkIfTokenHasExpired } from "../common";
 
 const LIMIT = 50;
+
+export const areTracksSaved = async (trackIds) => {
+    await checkIfTokenHasExpired();
+    let response;
+    try {
+        response = await spotify().containsMySavedTracks(trackIds);
+    } catch (e) {
+        console.log(e);
+    }
+
+    return response;
+};
+
+export const getSavedTracks = async () => {
+    await checkIfTokenHasExpired();
+    let response;
+    try {
+        response = await spotify().getMySavedTracks({
+            limit: LIMIT,
+        });
+    } catch (e) {
+        console.log(e);
+    }
+
+    return response;
+};
+
+export const saveTracks = async (trackIds) => {
+    await checkIfTokenHasExpired();
+    let response;
+    try {
+        response = await spotify().addToMySavedTracks({ ids: trackIds });
+    } catch (e) {
+        console.log(e);
+    }
+
+    return response;
+};
+
+export const removeSavedTracks = async (trackIds) => {
+    await checkIfTokenHasExpired();
+    let response;
+    try {
+        response = await spotify().removeFromMySavedTracks({ ids: trackIds });
+    } catch (e) {
+        console.log(e);
+    }
+
+    return response;
+};
+
+export const getFollowedArtists = async (term) => {
+    await checkIfTokenHasExpired();
+    let response;
+    try {
+        response = await spotify().getFollowedArtists({
+            limit: LIMIT
+        })
+    } catch (e) {
+        console.log(e);
+    }
+
+    return response;
+};
+
+export const isFollowingArtists = async (artistIds) => {
+    await checkIfTokenHasExpired();
+    let response;
+    try {
+        response = await spotify().isFollowingArtists(artistIds);
+    } catch (e) {
+        console.log(e);
+    }  
+
+    return response;
+};
+
+export const followArtists = async (artistIds) => {
+    await checkIfTokenHasExpired();
+    let response;
+    try {
+        response = await spotify().followArtists(artistIds);
+    } catch (e) {
+        console.log(e);
+    }
+
+    return response;
+}
+
+export const unfollowArtists = async (artistIds) => {
+    await checkIfTokenHasExpired();
+    let response;
+    try {
+        response = await spotify().unfollowArtists(artistIds);
+    } catch (e) {
+        console.log(e);
+    }
+
+    return response;
+};
 
 export const getTopArtists = async (term, offset = 0) => {
     await checkIfTokenHasExpired();

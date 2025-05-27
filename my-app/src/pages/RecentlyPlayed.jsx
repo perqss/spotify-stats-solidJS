@@ -1,9 +1,7 @@
 import { createEffect, createResource, createSignal } from "solid-js";
 import { getRecentlyPlayed } from "../clients/SpotifyClient";
 import Menu from "../components/Menu";
-import { List } from "@suid/material";
 import Song from "../components/Song";
-import styles from '../App.module.css'
 
 const RecentlyPlayed = () => {
 

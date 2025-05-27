@@ -1,10 +1,7 @@
 import { createResource } from "solid-js";
-import { SpotifyPlayButton } from "../components/MaterialComponentsCss";
 import { useNavigate, useParams } from "@solidjs/router";  
-import { ArrowBackIosNewOutlined } from "@suid/icons-material";
 import Song from "../components/Song";
 import { getAlbum } from "../clients/SpotifyClient";
-import { Avatar, Typography, IconButton, List } from "@suid/material";
 import { getReleaseDateYear, grey, lighterMainColor, parseArtists } from "../common";
 
 const AlbumInfo = () => {
@@ -97,13 +94,13 @@ const AlbumInfo = () => {
                   </Typography>
                 )}
                 <SpotifyPlayButton
-                        href={albumInfo().external_urls.spotify}
-                        variant='contained'
-                        target='_BLANK'
-                        sx={{
-                          marginTop: '10px'
-                        }}
-                    >
+                    href={albumInfo().external_urls.spotify}
+                    variant='contained'
+                    target='_BLANK'
+                    sx={{
+                        marginTop: '10px'
+                    }}
+                >
                     <Typography
                         variant='h6'
                     >
@@ -116,7 +113,7 @@ const AlbumInfo = () => {
                 variant='h5'
                 color='white'
                 sx={{margin: 3}}
-              >
+            >
                 Album tracks
             </Typography>
             <List>

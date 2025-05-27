@@ -11,14 +11,34 @@ export const scopes = [
     'user-read-recently-played',
     'user-read-playback-state',
     'user-top-read',
-    'user-modify-playback-state'
+    'user-modify-playback-state',
+    'user-follow-read',
+    'user-follow-modify',
+    'user-library-read',
+    'user-library-modify',
   ];
 export const clientId = '2b6b582e7a3342288fa92e42c64f9c38';
 export const authEndPoint = 'https://accounts.spotify.com/authorize';
-export const frontendUrl = 'http://localhost:3001';
+let frontendUrl = '';
+import.meta.env.DEV ? frontendUrl = 'http://127.0.0.1:3001/' : frontendUrl = 'http://127.0.0.1:3002/';
 export const LOAD_AT_ONCE_LIMIT = 99;
 export const OFFSET = 49;
 export const githubUrl = 'https://github.com/perqss/spotify-stats-app';
+
+export const durationInHrMinSec = (duration) => {
+    let milliseconds = Math.floor((duration % 1000) / 100),
+    seconds = Math.floor((duration / 1000) % 60),
+    minutes = Math.floor((duration / (1000 * 60)) % 60),
+    hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+
+    hours = (hours < 10) ? '0' + hours : hours;
+    minutes = (minutes < 10) ? '0' + minutes : minutes;
+    seconds = (seconds < 10) ? '0' + seconds : seconds;
+
+    let result;
+    hours === '00' ? result = minutes + ':' + seconds : result = hours + ':' + minutes + ':' + seconds;
+    return result;
+};
 
 export const getTokenFromUrl = () => {
     return window.location.hash
@@ -35,6 +55,22 @@ export const getTokenFromUrl = () => {
 export const parseArtists = (artistsInfo) => {
     const artists = artistsInfo.map(artistInfo => artistInfo.name);
     return artists.join(', ');
+};
+
+export const assignArtistId = (artists, index) => {
+    if (artists.length - 1 === index) {
+        return "last-artist";
+    } else if (index === 0) {
+        return "first-artist";
+    }
+};
+
+export const assignSongId = (songs, index) => {
+    if (songs.length - 1 === index) {
+        return "last-song";
+    } else if (index === 0) {
+        return "first-song";
+    }
 };
 
 export const getReleaseDateYear = (releaseDate) => {

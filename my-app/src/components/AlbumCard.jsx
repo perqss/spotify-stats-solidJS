@@ -1,8 +1,4 @@
-import { useAppContext } from "../App";
-import { CardActionArea, Card, CardActions, CardContent, CardMedia, Typography } from "@suid/material";
 import { mainColor } from "../common";
-import { ArtistPlayButton } from "./MaterialComponentsCss";
-import { PlayCircleFilledOutlined } from "@suid/icons-material";
 import { useNavigate } from "@solidjs/router";
 
 const AlbumCard = (props) => {
@@ -22,7 +18,7 @@ const AlbumCard = (props) => {
 
     const handleClickAlbum = () => {
         navigate(`/album/${props.album[1].id}`);
-    }
+    };
 
     return (
         <Card sx={{backgroundColor: mainColor, margin: 1}}>
