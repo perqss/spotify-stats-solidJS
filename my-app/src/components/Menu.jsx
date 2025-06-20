@@ -6,7 +6,7 @@ import styles from './Menu.module.css'
 const Menu = ({ componentIndex, setTerm }) => {
   const [selectedMenu, setSelectedMenu] = createSignal(componentIndex);
   const [selectedSubMenu, setSelectedSubMenu] = createSignal('All Time');
-  const menuItems = ['Top Artists', 'Top Songs', 'Top Albums', 'Recently Played', 'Music Taste', 'Followed Artists', 'Saved Albums'];
+  const menuItems = ['Top Artists', 'Top Songs', 'Top Albums', 'Recently Played', 'Music Taste', 'Followed Artists', 'Saved Songs'];
   const subMenuItems = ['All Time', 'Last 6 Months', 'Last 4 Weeks'];
   const menuIcons = ['mic', 'music_note', 'album', 'history', 'query_stats', 'favorite_border', 'bookmarks'];
   const navigate = useNavigate();

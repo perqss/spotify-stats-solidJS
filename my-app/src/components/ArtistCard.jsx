@@ -2,7 +2,6 @@ import { useContext } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
 import { AppContext } from '../App';
 import { spotifyGreen } from '../common';
-import styles from './Artist.module.css';
 
 const ArtistCard = ({ className, artistInfo, handleClickFollowBtnParent }) => {
   const context = useContext(AppContext);
@@ -26,11 +25,11 @@ const ArtistCard = ({ className, artistInfo, handleClickFollowBtnParent }) => {
   };
 
   return (
-    <div class={className}>
-        <div class={styles["artist-card"]} onClick={handleClickArtist}>
-            <img class={styles["artist-image"]} src={artistInfo.images[0].url} alt={artistInfo.name} />
-            <div class={styles["artist-info"]}>
-                <p class={styles["artist-name"]}>{`${artistInfo.name}`}</p>
+    <div class={`${className} artist-card`}>
+        <div class="artist-album-card" onClick={handleClickArtist}>
+            <img class="artist-album-image" src={artistInfo.images[0].url} alt={artistInfo.name} />
+            <div class="artist-album-info">
+                <p class="artist-album-name">{`${artistInfo.name}`}</p>
             </div>
             <div>
               <button 

@@ -4,6 +4,7 @@ import { useNavigate } from '@solidjs/router';
 import { grey, parseArtists, durationInHrMinSec } from '../common';
 import styles from './Song.module.css';
 import { saveTracks, removeSavedTracks } from '../clients/SpotifyClient';
+import Waveform from './Waveform';
 
 const Song = ({ className, songInfo, albumCover, handleClickSaveBtnParent }) => {
     const context = useContext(AppContext);
@@ -74,6 +75,7 @@ const Song = ({ className, songInfo, albumCover, handleClickSaveBtnParent }) => 
                 <div class={styles["duration"]}>{durationInHrMinSec(songInfo.duration_ms)}</div>
             </div>
         </div>
+        <Waveform songId={songInfo.id}/>
     </div>
 )};
 

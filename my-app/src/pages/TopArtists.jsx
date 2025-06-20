@@ -7,7 +7,7 @@ import { assignArtistId } from '../common';
 
 const TopArtists = ({ artistTerm }) => {
     const [artists, setArtists] = createStore([]);
-   // const [artists, setArtists] = createSignal([]);
+   //const [artists, setArtists] = createSignal([]);
 
     const fetchTopArtists = async () => {
         const response = await getTopArtists(artistTerm());
@@ -63,6 +63,23 @@ const TopArtists = ({ artistTerm }) => {
                         </div>)
                         }}
                     </For>
+                    {/* <Index each={artists}>
+                        {(artist, index) => {
+                            return (
+                        <div 
+                            class='grid-item' 
+                        >
+                            <div class='card-wrapper'>
+                                <div class='card-index'>{index + 1}</div>
+                                <ArtistCard
+                                    className={assignArtistId(artists, index)}
+                                    artistInfo={artist()}
+                                    handleClickFollowBtnParent={handleClickFollowBtnParent}
+                                />
+                            </div>  
+                        </div>)
+                        }}
+                    </Index> */}
                 </div>
             </div>
         </div>

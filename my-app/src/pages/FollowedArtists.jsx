@@ -1,4 +1,4 @@
-import { createEffect } from "solid-js";
+import { createEffect, createSignal, Index } from "solid-js";
 import { For } from "solid-js";
 import { createStore, produce } from "solid-js/store";
 import { getFollowedArtists, isFollowingArtists, unfollowArtists } from "../clients/SpotifyClient";
@@ -7,7 +7,8 @@ import { assignArtistId } from "../common";
 
 
 const FollowedArtists = () => {
-    const [artists, setArtists] = createStore([]);
+    //const [artists, setArtists] = createStore([]);
+    const [artists, setArtists] = createSignal([], { equals: false});
 
     const fetchFollowedArtists = async () => {
         const response = await getFollowedArtists();
@@ -40,15 +41,24 @@ const FollowedArtists = () => {
 
     const handleClickFollowBtnParent = async (artist) => {
       await unfollowArtists([artist.id]);
-      setArtists(
-        produce(prevArtists => {
-          const index = prevArtists.findIndex(a => a.id === artist.id);
-          if (index !== -1) {
-            prevArtists.splice(index, 1); // MUTACJA DOZWOLONA wewnątrz produce
-          }
-        })
-      );
+      // setArtists(
+      //   produce(prevArtists => {
+      //     const index = prevArtists.findIndex(a => a.id === artist.id);
+      //     if (index !== -1) {
+      //       prevArtists.splice(index, 1); // MUTACJA DOZWOLONA wewnątrz produce
+      //     }
+      //   })
+      // );
+      //setArtists(prevArtists => prevArtists.filter(a => a.id !== artist.id)); dla signals
+      setArtists(prev => {
+        const i = prev.findIndex(a => a.id === artist.id);
+        if (i !== -1) {
+          prev.splice(i, 1);
+        }
+        return prev;
+      })
     };
+    
     // useCallback does not limit the renders in this case if passed to ArtistCard
     // const handleClickFollowBtnParent = useCallback(
     //     async (index) => {
@@ -59,19 +69,18 @@ const FollowedArtists = () => {
 
     // const createFollowHandler = useCallback(
     //         (index) => () => handleClickFollowBtnParent(index), [handleClickFollowBtnParent]);
-
     return (
         <div>
           <div class='display-outer-container'>
             <div class='display-inner-container'>
               <div class='grid-container'>
-                <For each={artists}>
+                <For each={artists()}>
                     {(artist, index) => (
                         <div class='grid-item'>
                             <div class='card-wrapper'>
                                 <div class='card-index'>{index() + 1}</div>
                                 <ArtistCard
-                                    class={assignArtistId(artists, index())}
+                                    className={assignArtistId(artists, index())}
                                     artistInfo={artist}
                                     handleClickFollowBtnParent={handleClickFollowBtnParent}
                                 />
@@ -79,6 +88,20 @@ const FollowedArtists = () => {
                         </div>
                     )}
                 </For>
+                  {/* <Index each={artists}>
+                    {(artist, index) => (
+                        <div class='grid-item'>
+                            <div class='card-wrapper'>
+                                <div class='card-index'>{index + 1}</div>
+                                <ArtistCard
+                                    className={assignArtistId(artists, index)}
+                                    artistInfo={artist()}
+                                    handleClickFollowBtnParent={handleClickFollowBtnParent}
+                                />
+                            </div>
+                        </div>
+                    )}
+                </Index> */}
               </div>
             </div>
           </div>
