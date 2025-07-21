@@ -177,3 +177,7 @@ button:focus-visible {
   margin-left: 20px;
   color: white;
 }
+
+.play-button {
+    background-color: inherit;
+}

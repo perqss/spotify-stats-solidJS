@@ -1,53 +1,40 @@
-import { mainColor } from "../common";
 import { useNavigate } from "@solidjs/router";
+import { useContext } from "solid-js";
+import { PlaybackAPIContext } from "./PlaybackProvider";
 
-const AlbumCard = (props) => {
-    const setSongId = useAppContext()?.setSongId;
-    const setArtistId = useAppContext()?.setArtistId;
-    const setAlbumId = useAppContext()?.setAlbumId;
-    const setOpenBottomBar = useAppContext()?.setOpenBottomBar;
+const AlbumCard = ({ album }) => {
+    const context = useContext(PlaybackAPIContext);
     const navigate = useNavigate();
 
+    const handleClickAlbum = () => {
+        navigate(`/album/${album[1].id}`);
+    };
+    
     const handleClickPlayBtn = (event) => {
         event.stopPropagation();
-        setAlbumId(props.album[1].id);
-        setOpenBottomBar(true);
-        setSongId(null);
-        setArtistId(null);
-    };
-
-    const handleClickAlbum = () => {
-        navigate(`/album/${props.album[1].id}`);
+        context.playAlbum(album[1].id);
     };
 
     return (
-        <Card sx={{backgroundColor: mainColor, margin: 1}}>
-          <CardActionArea
-            onClick={handleClickAlbum}
-          >
-            <CardMedia
-              sx={{ height: '200px'}}
-              image={props.album[1].image}
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h7" color='white'>
-                {`${props.index}. ${props.album[0]}`}
-              </Typography>
-            </CardContent>
-            <CardActions
-              disableSpacing
+        <div class="artist-album-card" onClick={handleClickAlbum}>
+          <img class="artist-album-image" src={album[1].image} alt={album[0]} />
+          <div class="artist-album-info">
+              <p class="artist-album-name">{`${album[0]}`}</p>
+          </div>
+          <div>
+            <button 
+              class="material-icons" 
+              style={{
+                'background-color': 'inherit'
+              }} 
+              onClick={handleClickPlayBtn} 
+              title="Play"
             >
-            </CardActions>
-          </CardActionArea>
-          <ArtistPlayButton
-            onClick={handleClickPlayBtn}
-          >
-            <PlayCircleFilledOutlined 
-              sx={{color: 'white'}}
-            />
-          </ArtistPlayButton>
-        </Card>
-      );
+              play_circle
+            </button>
+          </div>
+        </div>
+    );
 };
 
 export default AlbumCard;

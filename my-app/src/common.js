@@ -1,4 +1,4 @@
-import { spotify } from ".";
+import { spotify } from "./main";
 
 export const spotifyGreen = '#1DB954'
 export const mainColor = '#1e1f1e'

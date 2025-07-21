@@ -3,7 +3,7 @@ import TopBar from './TopBar';
 import { useNavigate } from '@solidjs/router';
 import styles from './Menu.module.css'
 
-const Menu = ({ componentIndex, setTerm }) => {
+const Menu = ({ componentIndex, setTerm, closeSubMenu }) => {
   const [selectedMenu, setSelectedMenu] = createSignal(componentIndex);
   const [selectedSubMenu, setSelectedSubMenu] = createSignal('All Time');
   const menuItems = ['Top Artists', 'Top Songs', 'Top Albums', 'Recently Played', 'Music Taste', 'Followed Artists', 'Saved Songs'];
@@ -16,7 +16,7 @@ const Menu = ({ componentIndex, setTerm }) => {
   };
 
   const openSubMenu = (index) => {
-    return [0, 1, 2].includes(index) && selectedMenu() === index;
+    return [0, 1, 2].includes(index) && selectedMenu() === index && !closeSubMenu;
   };
 
   createEffect(() => {
@@ -70,7 +70,7 @@ const Menu = ({ componentIndex, setTerm }) => {
           {(item, index) => (
             <>
               <div
-                class={`menu-${index} ${styles["menu-item"]} ${selectedMenu() === index ? styles["selected-menu"] : ""}`}
+                class={`${styles["menu-item"]} ${selectedMenu() === index ? styles["selected-menu"] : ""}`}
                 onClick={() => handleClickMenuItem(index)}
               >
                 <span class={`material-icons ${styles["icon"]}`}>{menuIcons[index]}</span>

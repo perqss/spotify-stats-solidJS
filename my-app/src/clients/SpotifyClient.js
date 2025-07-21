@@ -1,4 +1,4 @@
-import { spotify } from "../index";
+import { spotify } from "../main";
 import { checkIfTokenHasExpired } from "../common";
 
 const LIMIT = 50;

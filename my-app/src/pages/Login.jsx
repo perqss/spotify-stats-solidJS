@@ -1,6 +1,6 @@
-import { createSignal, createEffect } from 'solid-js';
+import { createSignal, onMount } from 'solid-js';
 import { useNavigate } from '@solidjs/router'; 
-import logo from '../logo.svg';
+import logo from '../assets/logo.svg?inline';
 import { getLoginUrl, getCodeFromUrl, getTokens } from '../common';
 import styles from '../components/Login.module.css';
 
@@ -8,7 +8,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [loginUrl, setLoginUrl] = createSignal('');
 
-  createEffect(() => {
+  onMount(() => {
     const code = getCodeFromUrl();
     const afterLogIn = async () => {
         await getTokens(code);
@@ -21,7 +21,7 @@ const Login = () => {
     };
 
     code ? afterLogIn() : logIn();
-  });
+  })
 
   return (
     <div class={styles["App"]}>

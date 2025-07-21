@@ -1,25 +1,29 @@
-import { createEffect, createSignal } from "solid-js";
+import { useContext } from "solid-js";
+import { PlaybackStateContext } from "./PlaybackProvider";
 
-const BottomBar = (props) => {
+const BottomBar = () => {
+    const context = useContext(PlaybackStateContext);
+    const contextState = context.state;
+
     const chooseSrc = () => {
-        if (props.songId()) {
-            return `https://open.spotify.com/embed/track/${props.songId()}?utm_source=generator`;
-        } else if (props.artistId()) {
-            return `https://open.spotify.com/embed/artist/${props.artistId()}?utm_source=generator`;
-        } else if (props.albumId()) {
-            return `https://open.spotify.com/embed/album/${props.albumId()}?utm_source=generator`;
+        if (contextState.songId) {
+            return `https://open.spotify.com/embed/track/${contextState.songId}?utm_source=generator`;
+        } else if (contextState.artistId) {
+            return `https://open.spotify.com/embed/artist/${contextState.artistId}?utm_source=generator`;
+        } else if (contextState.albumId) {
+            return `https://open.spotify.com/embed/album/${contextState.albumId}?utm_source=generator`;
         }
         return '';
     };
 
     return (
         <div>
-            {props.open() && <div style={{['margin-top']: '70px'}}>
+            {contextState.open && <div style={{'margin-top': '70px'}}>
                 <iframe
                     style={{
                         position: 'fixed',
                         width: '100%',
-                        ['border-radius']: '12px',
+                        'border-radius': '12px',
                         bottom: '-70px',
                     }}
                     src={chooseSrc()}
@@ -27,20 +31,22 @@ const BottomBar = (props) => {
                     allowFullScreen="" 
                     allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
                     loading="lazy"
+                    title="Spotify Player"
                 ></iframe>
-                <IconButton 
-                    sx={{
-                        bottom: 70,
-                        ['margin-bottom']: 1, 
-                        ['margin-right']: 'auto', 
-                        position: 'fixed'
+                <button 
+                    style={{
+                        bottom: '70px',
+                        left: '0px',
+                        padding: '10px',
+                        position: 'fixed',
+                        border: 'none',
+                        'background-color': 'inherit',
                     }}
-                    onClick={() => props.setOpen(false)}
+                    onClick={() => context.setState("open", false)}
+                    class="material-icons"
                 >
-                    <CancelOutlined 
-                        sx={{color: 'white'}}
-                    />
-                </IconButton>
+                    cancel
+                </button>
             </div>}
         </div>
     )

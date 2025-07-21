@@ -11,7 +11,6 @@ const ArtistProfile = () => {
 
     const fetchArtist = async () => {
         const response = await getArtist(artistId);
-        console.log(response)
         return response;
     }
 
@@ -28,7 +27,7 @@ const ArtistProfile = () => {
             {
                 artistInfo() && 
                 <div
-                    class={styles["artist-profile-display"]}
+                    class={`${styles["artist-profile-display"]} artist-profile-display`}
                 >
                     <img
                         src={artistInfo().images[0].url}

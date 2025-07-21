@@ -1,18 +1,15 @@
 import { useContext } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
-import { AppContext } from '../App';
 import { spotifyGreen } from '../common';
+import { PlaybackAPIContext } from './PlaybackProvider';
 
 const ArtistCard = ({ className, artistInfo, handleClickFollowBtnParent }) => {
-  const context = useContext(AppContext);
+  const context = useContext(PlaybackAPIContext);
   const navigate = useNavigate();
 
   const handleClickPlayBtn = (e) => {
     e.stopPropagation();
-    context.setArtistId(artistInfo.id);
-    context.setOpenBottomBar(true);
-    context.setSongId(null);
-    context.setAlbumId(null);
+    context.playArtist(artistInfo.id);
   };
 
   const handleClickArtist = () => {
@@ -33,15 +30,14 @@ const ArtistCard = ({ className, artistInfo, handleClickFollowBtnParent }) => {
             </div>
             <div>
               <button 
-                  style={{'background-color': 'inherit'}} 
-                  class="material-icons" 
+                  class="material-icons play-button" 
                   onClick={handleClickPlayBtn}
                   title="Play"
                 >
                     play_circle
                 </button>
                 <button 
-                  class="material-icons follow-button" 
+                  class={`material-icons follow-button ${artistInfo.isFollowing ? 'followed' : 'not-followed'}`} 
                   style={{'background-color': 'inherit', color: artistInfo.isFollowing ? spotifyGreen : 'white'}}
                   onClick={handleClickFollowBtn}
                   title="Follow"

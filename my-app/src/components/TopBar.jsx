@@ -24,16 +24,6 @@ const TopBar = () => {
     navigate('/');
   };
 
-  const handleAvatarClick = (event) => {
-    if (!openProfileMenu()) {
-      setOpenProfileMenu(true);
-      setAnchorEl(event.currentTarget);
-    } else {
-      setOpenProfileMenu(false);
-      setAnchorEl(null);
-    }
-  };
-
   const toggleMenu = () => {
     setShowMenu(!showMenu());
   };

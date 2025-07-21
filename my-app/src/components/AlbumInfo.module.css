@@ -1,0 +1,43 @@
+.album-display {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 200px;
+    padding: 20px;
+}
+
+.album-header {
+    display: flex;
+    margin-top: 60px;
+}
+
+.album-title {
+    font-size: 2rem;
+    margin-top: 80px;
+}
+
+.album-artist, .album-label, .album-genre {
+    font-size: 1.2rem;
+    margin-top: 6px;
+}
+
+.album-year {
+    font-size: 1.2rem;
+    margin-top: 6px;
+    margin-bottom: 20px;
+}
+
+.tracks-header {
+    margin: 20px 0 10px 0;
+    font-size: 1.5rem;
+    color: white;
+    font-weight: bold;
+}
+
+.tracks-list {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

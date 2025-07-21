@@ -1,4 +1,4 @@
-import { createEffect, createSignal, For } from 'solid-js';
+import { createEffect, For } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import { getTopSongs, areTracksSaved, saveTracks, removeSavedTracks } from '../clients/SpotifyClient';
 import Song from '../components/Song';
@@ -35,7 +35,7 @@ const TopSongs = ({ songTerm }) => {
     } else {
       await saveTracks([song.id]);
     }
-    setSongs((s) => s.id === song.id, 'isSaved', !song.isSaved);
+    setSongs(s => s.id === song.id, 'isSaved', !song.isSaved);
   };
 
   return (

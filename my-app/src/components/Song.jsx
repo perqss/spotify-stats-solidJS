@@ -1,13 +1,12 @@
 import { useContext } from 'solid-js';
-import { AppContext } from '../App';
 import { useNavigate } from '@solidjs/router';
 import { grey, parseArtists, durationInHrMinSec } from '../common';
 import styles from './Song.module.css';
-import { saveTracks, removeSavedTracks } from '../clients/SpotifyClient';
+import { PlaybackAPIContext } from './PlaybackProvider';
 import Waveform from './Waveform';
 
 const Song = ({ className, songInfo, albumCover, handleClickSaveBtnParent }) => {
-    const context = useContext(AppContext);
+    const context = useContext(PlaybackAPIContext);
     const navigate = useNavigate();
 
     const handleSecondary = () => {
@@ -20,10 +19,7 @@ const Song = ({ className, songInfo, albumCover, handleClickSaveBtnParent }) => 
 
     const handleClickPlayBtn = (e) => {
       e.stopPropagation();
-      context.setArtistId(null);
-      context.setOpenBottomBar(true);
-      context.setSongId(songInfo.id);
-      context.setAlbumId(null);
+      context.playSong(songInfo.id);
     };
 
     const handleClickSaveBtn = async (event) => {
@@ -36,7 +32,7 @@ const Song = ({ className, songInfo, albumCover, handleClickSaveBtnParent }) => 
     };
   
   return (
-    <div class={className}>
+    <div class={`${className} song-card`}>
         <div class={styles["song-item"]} onClick={handleSongClick}>
             <div class={styles["song-left"]}>
                 <img
@@ -58,7 +54,7 @@ const Song = ({ className, songInfo, albumCover, handleClickSaveBtnParent }) => 
             </div>
             <div class={styles["meta-controls"]}>
                 <button 
-                    class="material-icons"
+                    class={`material-icons save-button ${songInfo.isSaved ? 'saved' : 'not-saved'}`} 
                     style={{'background-color': 'inherit', color: songInfo.isSaved ? 'yellow' : 'white'}}
                     onClick={handleClickSaveBtn}
                     title={songInfo.isSaved ? "Remove from Library" : "Add to Library"}
@@ -66,7 +62,7 @@ const Song = ({ className, songInfo, albumCover, handleClickSaveBtnParent }) => 
                     bookmark_add
                 </button>
                 <button 
-                    class={`material-icons ${styles["play-button"]}`}
+                    class="material-icons play-button"
                     onClick={handleClickPlayBtn}
                     title="Play"
                 >
