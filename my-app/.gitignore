@@ -1,2 +1,4 @@
 node_modules
 dist
+my-app/package.json
+my-app/package-lock.json
