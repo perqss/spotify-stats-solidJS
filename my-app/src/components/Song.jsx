@@ -3,7 +3,6 @@ import { useNavigate } from '@solidjs/router';
 import { grey, parseArtists, durationInHrMinSec } from '../common';
 import styles from './Song.module.css';
 import { PlaybackAPIContext } from './PlaybackProvider';
-import Waveform from './Waveform';
 
 const Song = ({ className, songInfo, albumCover, handleClickSaveBtnParent }) => {
     const context = useContext(PlaybackAPIContext);
@@ -15,7 +14,7 @@ const Song = ({ className, songInfo, albumCover, handleClickSaveBtnParent }) => 
         } else {
             return `${parseArtists(songInfo.album.artists)} - ${songInfo.album.name}`;
         }
-    }
+    };
 
     const handleClickPlayBtn = (e) => {
       e.stopPropagation();
@@ -42,14 +41,7 @@ const Song = ({ className, songInfo, albumCover, handleClickSaveBtnParent }) => 
                 />
                 <div class={styles["song-text"]}>
                     <div class={styles["primary-text"]}>{songInfo.name}</div>
-                    <div 
-                        class={styles["secondary-text"]} 
-                        style={{
-                            color: {grey}
-                        }}
-                    >
-                        {handleSecondary()}
-                    </div>
+                    <div class={styles["secondary-text"]} style={{color: {grey}}}>{handleSecondary()}</div>
                 </div>
             </div>
             <div class={styles["meta-controls"]}>
@@ -71,7 +63,6 @@ const Song = ({ className, songInfo, albumCover, handleClickSaveBtnParent }) => 
                 <div class={styles["duration"]}>{durationInHrMinSec(songInfo.duration_ms)}</div>
             </div>
         </div>
-        <Waveform songId={songInfo.id}/>
     </div>
 )};
 

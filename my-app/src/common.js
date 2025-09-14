@@ -142,8 +142,6 @@ export const getTokens = async (code) => {
 };
 
 export const getRefreshToken = async () => {
-
-    // refresh token that has been previously stored
     const url = "https://accounts.spotify.com/api/token";
     const payload = {
        method: 'POST',

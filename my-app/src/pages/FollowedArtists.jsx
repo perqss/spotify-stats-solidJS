@@ -35,25 +35,23 @@ const FollowedArtists = () => {
     };
     
     return (
-        <div>
-          <div class='display-outer-container'>
-            <div class='display-inner-container'>
-              <div class='grid-container'>
-                <For each={artists()}>
-                    {(artist, index) => 
-                        <div class='grid-item'>
-                            <div class='card-wrapper'>
-                                <div class='card-index'>{index() + 1}</div>
-                                <ArtistCard
-                                    className={assignArtistId(artists(), index())}
-                                    artistInfo={artist}
-                                    handleClickFollowBtnParent={handleClickFollowBtnParent}
-                                />
-                            </div>
-                        </div>
-                    }
-                </For>
-              </div>
+        <div class='display-outer-container'>
+          <div class='display-inner-container'>
+            <div class='grid-container'>
+              <For each={artists()}>
+                  {(artist, index) => 
+                      <div class='grid-item'>
+                          <div class='card-wrapper'>
+                              <div class='card-index'>{index() + 1}</div>
+                              <ArtistCard
+                                  className={assignArtistId(artists(), index())}
+                                  artistInfo={artist}
+                                  handleClickFollowBtnParent={handleClickFollowBtnParent}
+                              />
+                          </div>
+                      </div>
+                  }
+              </For>
             </div>
           </div>
         </div>
